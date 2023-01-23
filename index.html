@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upstart</title>
+    <link rel="stylesheet" href="./source/styles/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="flex align justify LOADING">
+    </div>
+    <div class="flex align justify ERROR">
+        <p class="lucro error_text" style="text-align: center;">Erro. Usuárrio incorreto!</p>
+    </div>
+    <div class="flex align column LOGIN">
+        <div class="logo flex row align justify">
+            <h1>UPSTART</h1>
+            <img src="./source/imgs/up-arrow.png" alt="logo">
+        </div>
+        <div class="login_inputs flex column align">
+            <input type="text" name="username" class="username login_input" placeholder="Username">
+            <ion-icon class="user" name="person-outline"></ion-icon>
+            <input type="password" name="password" class="password login_input" placeholder="Passsword">
+            <ion-icon class="lock" name="lock-open-outline"></ion-icon>
+        </div>
+        <div class="login_btn_box flex justify ">
+            <input type="button" value="LOGIN" class="login_btn" onclick="login()">
+        </div>
+    </div>
+    <div class="flex align column DASHBOARD">
+        <div class="saldo_box">
+            <div class="header flex row align">
+                <img src="https://images-ext-2.discordapp.net/external/vHxDdnRGYZ-4RUi9mZacqakh9aB_HGviM0ZhzLWj9II/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/693639831443734538/0589620657f2484b3c10ed0ecffbfdad.webp" alt="user icon">
+                <p>Estatísticas de investimento</p>
+            </div>
+            <h1 class="saldo" id="SALDO">R$ 00,00</h1>
+            <h3>Saldo em conta</h3>
+        </div>
+        <div class="data_box flex row align">
+            <input type="text" name="data" class="data" id="DATA" placeholder="Insira a data">
+            <input type="button" value="Buscar" class="buscar_data" id="BUSCAR">
+        </div>
+        <div class="status_boxes flex column align justify">
+            <div class="status_box flex row justify align">
+                <div class="status_texts flex column">
+                    <div class="status_title">
+                        <p>Entradas</p>
+                        <div style="width: 49%;"></div>
+                    </div>
+                    <div class="lines flex column">
+                        <div class="line flex row align">
+                            <div class="dot dot_green"></div>
+                            <p class="value" id="REALIZADAS">Realizadas: 0</p>
+                        </div>
+                        <div class="line flex row align">
+                            <div class="dot dot_yellow"></div>
+                            <p class="value" id="NAO_REALIZADAS">Não realizadas: 0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="status_graph flex justify align">
+                    <div id="GRAFICO1" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="status_box flex row justify align">
+                <div class="status_texts flex column">
+                    <div class="status_title">
+                        <p>Resultados</p>
+                        <div style="width: 61%;"></div>
+                    </div>
+                    <div class="lines flex column">
+                        <div class="line flex row align">
+                            <div class="dot dot_green"></div>
+                            <p class="value" id="GANHAS">Entradas ganhas: 0</p>
+                        </div>
+                        <div class="line flex row align">
+                            <div class="dot dot_yellow"></div>
+                            <p class="value" id="PERDIDAS">Entradas perdidas: 0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="status_graph flex justify align">
+                    <div id="GRAFICO2" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="status_box flex row justify align">
+                <div class="status_texts flex column">
+                    <div class="status_title">
+                        <p>Lucro do dia</p>
+                        <div style="width: 44%;"></div>
+                    </div>
+                    <h1 class="lucro" id="LUCRO">R$ 00,00</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="./source/scripts/index.js"></script>
+</body>
+</html>
