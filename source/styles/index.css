@@ -351,6 +351,7 @@ div[role="progressbar"] {
     padding: 10px 15px;
     border-radius: 12px;
     color: var(--text2);
+    overflow-y: scroll;
 }
 
 
