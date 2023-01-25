@@ -120,7 +120,7 @@ function set_stop_win(){
 
 function main(){
     login_page.style.display = 'none'
-    loading_page.style.display = 'flex'
+    home_page.style.display = 'flex'
     let user = localStorage.getItem('user')
     date = get_date()
     fetch(`https://api-upstart.squareweb.app/api/data/${user}/${date}`).then(response => 
@@ -129,8 +129,6 @@ function main(){
             status: response.status
         })
     ).then(res => {
-        loading_page.style.display = 'none'
-        home_page.style.display = 'flex'
         construct_home(res.data)
         
     }))
@@ -148,6 +146,10 @@ function login () {
     ).then(res => {
         if(res.data.status == 'authenticated'){
             localStorage.setItem('user', res.data.username);
+            let images = document.getElementsByClassName("pfp");
+                for (let i = 0; i < images.length; i++) {
+                images[i].src = res.data.pfp
+            }
             main()
         }else{
             login_page.style.display = 'none'
@@ -179,6 +181,10 @@ function search() {
     }))
 }
 
+function logout(){
+    window.location.reload();
+}
+document.getElementsByClassName('logout')[0].addEventListener('click', logout)
 
 
 function go_home(){
@@ -186,6 +192,7 @@ function go_home(){
     logs_page.style.display = 'none'
     notify_page.style.display = 'none'
     config_page.style.display = 'none'
+    main()
 }
 
 function go_logs(){
