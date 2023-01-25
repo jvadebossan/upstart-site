@@ -22,7 +22,7 @@
             <img src="./source/imgs/up-arrow.png" alt="logo">
         </div>
         <div class="login_inputs flex column align">
-            <input type="text" name="username" class="username login_input" placeholder="Username">
+            <input type="text" name="username" class="username login_input" placeholder="Username" autoCapitalize="off">
             <ion-icon class="user" name="person-outline"></ion-icon>
             <input type="password" name="password" class="password login_input" placeholder="Passsword">
             <ion-icon class="lock" name="lock-open-outline"></ion-icon>
@@ -32,17 +32,17 @@
         </div>
     </div>
     <div class="flex align column DASHBOARD">
+        <div class="header flex row align">
+            <p>Estatísticas de investimento</p>
+            <img src="https://images-ext-2.discordapp.net/external/vHxDdnRGYZ-4RUi9mZacqakh9aB_HGviM0ZhzLWj9II/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/693639831443734538/0589620657f2484b3c10ed0ecffbfdad.webp" alt="user icon">
+        </div>
         <div class="saldo_box">
-            <div class="header flex row align">
-                <img src="https://images-ext-2.discordapp.net/external/vHxDdnRGYZ-4RUi9mZacqakh9aB_HGviM0ZhzLWj9II/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/693639831443734538/0589620657f2484b3c10ed0ecffbfdad.webp" alt="user icon">
-                <p>Estatísticas de investimento</p>
-            </div>
             <h1 class="saldo" id="SALDO">R$ 00,00</h1>
             <h3>Saldo em conta</h3>
         </div>
         <div class="data_box flex row align">
             <input type="text" name="data" class="data" id="DATA" placeholder="Insira a data">
-            <input type="button" value="Buscar" class="buscar_data" id="BUSCAR">
+            <input type="button" value="Buscar" class="buscar_data" id="BUSCAR" onclick="search()">
         </div>
         <div class="status_boxes flex column align justify">
             <div class="status_box flex row justify align">
@@ -96,6 +96,80 @@
                     <h1 class="lucro" id="LUCRO">R$ 00,00</h1>
                 </div>
             </div>
+        </div>
+        <div class="footer flex align">
+            <ion-icon id="ICON_HOME" onclick="go_home()" class="footer_selected" name="home-outline"></ion-icon>
+            <ion-icon id="ICON_LOGS" onclick="go_logs()" class="" name="cloud-download-outline"></ion-icon>
+            <ion-icon id="ICON_NOTIFY" onclick="go_notify()" class="" name="notifications-outline"></ion-icon>
+            <ion-icon id="ICON_CONFIG" onclick="go_config()" class="" name="settings-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="flex align column LOGS">
+        <div class="header flex row align">
+            <p>Logs do bot</p>
+            <img src="https://images-ext-2.discordapp.net/external/vHxDdnRGYZ-4RUi9mZacqakh9aB_HGviM0ZhzLWj9II/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/693639831443734538/0589620657f2484b3c10ed0ecffbfdad.webp" alt="user icon">
+        </div>
+        <div class="logs_container flex align justify">
+            <div class="logs_box">
+                Carregando logs...
+            </div>
+        </div>
+        <div class="footer flex align">
+            <ion-icon id="ICON_HOME" onclick="go_home()" class="" name="home-outline"></ion-icon>
+            <ion-icon id="ICON_LOGS" onclick="go_logs()" class="footer_selected" name="cloud-download-outline"></ion-icon>
+            <ion-icon id="ICON_NOTIFY" onclick="go_notify()" class="" name="notifications-outline"></ion-icon>
+            <ion-icon id="ICON_CONFIG" onclick="go_config()" class="" name="settings-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="flex align column NOTIFICACOES">
+        <div class="header flex row align">
+            <p>Histórico de notificações</p>
+            <img src="https://images-ext-2.discordapp.net/external/vHxDdnRGYZ-4RUi9mZacqakh9aB_HGviM0ZhzLWj9II/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/693639831443734538/0589620657f2484b3c10ed0ecffbfdad.webp" alt="user icon">
+        </div>
+        <div class="notify_container"></div>
+        <div class="footer flex align">
+            <ion-icon id="ICON_HOME" onclick="go_home()" class="" name="home-outline"></ion-icon>
+            <ion-icon id="ICON_LOGS" onclick="go_logs()" class="" name="cloud-download-outline"></ion-icon>
+            <ion-icon id="ICON_NOTIFY" onclick="go_notify()" class="footer_selected" name="notifications-outline"></ion-icon>
+            <ion-icon id="ICON_CONFIG" onclick="go_config()" class="" name="settings-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="flex align column CONFIGS">
+        <div class="header flex row align">
+            <p>Configurações da conta</p>
+            <img src="https://images-ext-2.discordapp.net/external/vHxDdnRGYZ-4RUi9mZacqakh9aB_HGviM0ZhzLWj9II/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/693639831443734538/0589620657f2484b3c10ed0ecffbfdad.webp" alt="user icon">
+        </div>
+        <div class="config_container flex column align">
+            <div class="conf flex align">
+                <p>Status do bot</p>
+                <div class="switch flex justify align">
+                    <div class="switch-div">
+                        <input type="checkbox" id="switch" onclick="turn_on()" checked>
+                        <label for="switch"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="conf flex align">
+                <p>Entrada</p>
+                <div class="stop_win_box flex row align">
+                    <input type="text" class="stop_win entrada">
+                    <input type="button" value="Salvar" onclick="set_entry()" class="send_stopwin">
+                </div>
+            </div>
+            <div class="conf flex align">
+                <p>Stop win</p>
+                <div class="stop_win_box flex row align">
+                    <input type="text" class="stop_win">
+                    <input type="button" value="Salvar" onclick="set_stop_win()" class="send_stopwin">
+                </div>
+            </div>
+            <div class="logout flex justify align">SAIR</div>
+        </div>
+        <div class="footer flex align">
+            <ion-icon id="ICON_HOME" onclick="go_home()" class="" name="home-outline"></ion-icon>
+            <ion-icon id="ICON_LOGS" onclick="go_logs()" class="" name="cloud-download-outline"></ion-icon>
+            <ion-icon id="ICON_NOTIFY" onclick="go_notify()" class="" name="notifications-outline"></ion-icon>
+            <ion-icon id="ICON_CONFIG" onclick="go_config()" class="footer_selected" name="settings-outline"></ion-icon>
         </div>
     </div>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

@@ -1,8 +1,15 @@
+//BASE PAGES
 login_page = document.getElementsByClassName('LOGIN')[0]
 loading_page = document.getElementsByClassName('LOADING')[0]
 error_page = document.getElementsByClassName('ERROR')[0]
 error_text = document.getElementsByClassName('error_text')[0]
-dashboard_page = document.getElementsByClassName('DASHBOARD')[0]
+
+//MAIN PAGES
+home_page = document.getElementsByClassName('DASHBOARD')[0]
+logs_page = document.getElementsByClassName('LOGS')[0]
+notify_page = document.getElementsByClassName('NOTIFICACOES')[0]
+config_page = document.getElementsByClassName('CONFIGS')[0]
+
 
 function get_date(){
     const today = new Date()
@@ -17,14 +24,13 @@ function get_date(){
 }
 
 
-function construct_page(obj){
+function construct_home(obj){
     if (obj == 'Erro'){
-        dashboard_page.style.display = 'none'
+        home_page.style.display = 'none'
         error_page.style.display = 'flex'
         error_text.innerHTML = '<a href="https://upstart-bot.netlify.app" class="lucro" style="text-decoration: none;">Erro na api. Clique para reiniciar.<a>'
     }
     else{
-        console.log(String(Number(100/obj.total*obj.created)))
         document.getElementById('SALDO').innerText = `R$ ${String(obj.actual_bal)}`
         document.getElementById('REALIZADAS').innerText = `Realizadas: ${String(obj.created)}`
         document.getElementById('NAO_REALIZADAS').innerText = `Não realizadas: ${String(obj.not_created)}`
@@ -36,10 +42,86 @@ function construct_page(obj){
     }
 }
 
+function construct_logs(){
+    let user = localStorage.getItem('user')
+    fetch(`https://api-upstart.squareweb.app/api/logs/${user}`).then(response => 
+    response.json().then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        console.log(res.data.logs)
+        document.getElementsByClassName('logs_box')[0].innerHTML = res.data.logs
+    }))
+}
 
-function main(user){
+function construct_configs(){
+    let user = localStorage.getItem('user')
+    fetch(`https://api-upstart.squareweb.app/api/configs/${user}`).then(response => 
+    response.json().then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        if(res.data.power == 'on'){
+            document.getElementById('switch').setAttribute('checked', '')
+        }
+        else{
+            document.getElementById('switch').removeAttribute('checked', '')
+        }
+        document.getElementsByClassName('entrada')[0].value = res.data.entry
+        document.getElementsByClassName('stop_win')[1].value = res.data.stop_win
+    }))
+}
+
+//config painel settings
+function turn_on(){
+    let user = localStorage.getItem('user')
+    let checked = document.getElementById('switch').checked
+    let value = ''
+    if(checked == true){
+        value = 'on'
+    }else{
+        value = 'off'
+    }
+    fetch(`https://api-upstart.squareweb.app/api/set/power/${user}/${value}`).then(response => 
+    response.json().then(data => ({
+            data: data,
+            status: response.status
+        })
+    ))
+    
+}
+function set_entry(){
+    let user = localStorage.getItem('user')
+    let entry = document.getElementsByClassName('entrada')[0]
+    fetch(`https://api-upstart.squareweb.app/api/set/entry/${user}/${entry.value}`).then(response => 
+    response.json().then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        window.alert('salvo!')
+    }))
+}
+function set_stop_win(){
+    let user = localStorage.getItem('user')
+    let stop = document.getElementsByClassName('stop_win')[1]
+    fetch(`https://api-upstart.squareweb.app/api/set/stop_win/${user}/${stop.value}`).then(response => 
+    response.json().then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        window.alert('salvo!')
+    }))
+}
+
+
+function main(){
     login_page.style.display = 'none'
     loading_page.style.display = 'flex'
+    let user = localStorage.getItem('user')
     date = get_date()
     fetch(`https://api-upstart.squareweb.app/api/data/${user}/${date}`).then(response => 
     response.json().then(data => ({
@@ -48,9 +130,9 @@ function main(user){
         })
     ).then(res => {
         loading_page.style.display = 'none'
-        dashboard_page.style.display = 'flex'
-        construct_page(res.data)
-        localStorage.setItem('user', user);
+        home_page.style.display = 'flex'
+        construct_home(res.data)
+        
     }))
     
 }
@@ -65,7 +147,8 @@ function login () {
         })
     ).then(res => {
         if(res.data.status == 'authenticated'){
-            main(user)
+            localStorage.setItem('user', res.data.username);
+            main()
         }else{
             login_page.style.display = 'none'
             error_page.style.display = 'flex'
@@ -82,7 +165,7 @@ function search() {
     }
 
     user = localStorage.getItem('user')
-    dashboard_page.style.display = 'none'
+    home_page.style.display = 'none'
     loading_page.style.display = 'flex'
     fetch(`https://api-upstart.squareweb.app/api/data/${user}/${date}`).then(response => 
     response.json().then(data => ({
@@ -91,10 +174,40 @@ function search() {
         })
     ).then(res => {
         loading_page.style.display = 'none'
-        dashboard_page.style.display = 'flex'
-        construct_page(res.data)
+        home_page.style.display = 'flex'
+        construct_home(res.data)
     }))
 }
 
-let date = document.getElementById('BUSCAR')
-date.addEventListener('click', search)
+
+
+function go_home(){
+    home_page.style.display = 'flex'
+    logs_page.style.display = 'none'
+    notify_page.style.display = 'none'
+    config_page.style.display = 'none'
+}
+
+function go_logs(){
+    home_page.style.display = 'none'
+    logs_page.style.display = 'flex'
+    notify_page.style.display = 'none'
+    config_page.style.display = 'none'
+    construct_logs()
+    
+}
+
+function go_notify(){
+    home_page.style.display = 'none'
+    logs_page.style.display = 'none'
+    notify_page.style.display = 'flex'
+    config_page.style.display = 'none'
+}
+
+function go_config(){
+    home_page.style.display = 'none'
+    logs_page.style.display = 'none'
+    notify_page.style.display = 'none'
+    config_page.style.display = 'flex'
+    construct_configs()
+}
