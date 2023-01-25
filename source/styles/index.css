@@ -179,9 +179,9 @@ body{
 }
 .saldo{
     color: var(--text) !important;
-    font-size: 3.5rem;
+    font-size: 3.4rem;
     margin-left: 15px;
-    margin-top: 0px;
+    margin-top: -15px;
 }
 .saldo_box h3{
     color: var(--text);
