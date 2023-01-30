@@ -146,6 +146,7 @@ function login () {
     ).then(res => {
         if(res.data.status == 'authenticated'){
             localStorage.setItem('user', res.data.username);
+            localStorage.setItem('pfp', res.data.pfp);
             let images = document.getElementsByClassName("pfp");
                 for (let i = 0; i < images.length; i++) {
                 images[i].src = res.data.pfp
@@ -158,6 +159,16 @@ function login () {
     
         }
     }))
+}
+
+function keep_login(){
+    if(localStorage.getItem('user')){
+        let images = document.getElementsByClassName("pfp");
+            for (let i = 0; i < images.length; i++) {
+                images[i].src = localStorage.getItem('pfp')
+            }
+        main()
+    }
 }
 
 function search() {
@@ -182,6 +193,7 @@ function search() {
 }
 
 function logout(){
+    localStorage.clear()
     window.location.reload();
 }
 document.getElementsByClassName('logout')[0].addEventListener('click', logout)
