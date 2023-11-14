@@ -20,7 +20,7 @@ function get_date(){
     if (dd < 10) dd = '0' + dd
     if (mm < 10) mm = '0' + mm
 
-    return String(dd + mm + yyyy)
+    return `${dd}${mm}${yyyy}`
 }
 
 
