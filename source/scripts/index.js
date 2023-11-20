@@ -44,7 +44,7 @@ function construct_home(obj){
 
 function construct_logs(){
     let user = localStorage.getItem('user')
-    fetch(`https://api-upstart.onrender.com/api/logs/${user}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/logs/${user}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
@@ -57,7 +57,7 @@ function construct_logs(){
 
 function construct_configs(){
     let user = localStorage.getItem('user')
-    fetch(`https://api-upstart.onrender.com/api/configs/${user}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/configs/${user}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
@@ -84,7 +84,7 @@ function turn_on(){
     }else{
         value = 'off'
     }
-    fetch(`https://api-upstart.onrender.com/api/set/power/${user}/${value}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/set/power/${user}/${value}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
@@ -95,7 +95,7 @@ function turn_on(){
 function set_entry(){
     let user = localStorage.getItem('user')
     let entry = document.getElementsByClassName('entrada')[0]
-    fetch(`https://api-upstart.onrender.com/api/set/entry/${user}/${entry.value}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/set/entry/${user}/${entry.value}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
@@ -107,7 +107,7 @@ function set_entry(){
 function set_stop_win(){
     let user = localStorage.getItem('user')
     let stop = document.getElementsByClassName('stop_win')[1]
-    fetch(`https://api-upstart.onrender.com/api/set/stop_win/${user}/${stop.value}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/set/stop_win/${user}/${stop.value}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
@@ -123,7 +123,7 @@ function main(){
     home_page.style.display = 'flex'
     let user = localStorage.getItem('user')
     date = get_date()
-    fetch(`https://api-upstart.onrender.com/api/data/${user}/${date}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/data/${user}/${date}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
@@ -138,7 +138,7 @@ function main(){
 function login () {
     user = document.getElementsByClassName('username')[0].value
     password = document.getElementsByClassName('password')[0].value
-    fetch(`https://api-upstart.onrender.com/api/auth/${user}/${password}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/auth/${user}/${password}`).then(response => 
         response.json().then(data => ({
             data: data,
             status: response.status
@@ -180,7 +180,7 @@ function search() {
     user = localStorage.getItem('user')
     home_page.style.display = 'none'
     loading_page.style.display = 'flex'
-    fetch(`https://api-upstart.onrender.com/api/data/${user}/${date}`).then(response => 
+    fetch(`https://api-upstart.squareweb.app/api/data/${user}/${date}`).then(response => 
     response.json().then(data => ({
             data: data,
             status: response.status
