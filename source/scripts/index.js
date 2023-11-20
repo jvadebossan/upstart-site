@@ -31,14 +31,14 @@ function construct_home(obj){
         error_text.innerHTML = '<a href="https://upstart-bot.netlify.app" class="lucro" style="text-decoration: none;">Erro na api. Clique para reiniciar.<a>'
     }
     else{
-        document.getElementById('SALDO').innerText = `R$ ${String(obj.actual_bal)}`
+        document.getElementById('SALDO').innerText = `R$ ${String(obj.actual_bal).replace('.',',')}`
         document.getElementById('REALIZADAS').innerText = `Realizadas: ${String(obj.created)}`
         document.getElementById('NAO_REALIZADAS').innerText = `Não realizadas: ${String(obj.not_created)}`
         document.getElementById('GRAFICO1').style = `--value:${String(Number(100/obj.total*obj.not_created))}`
         document.getElementById('GANHAS').innerText = `Entradas ganhas: ${String(obj.wins)}`
         document.getElementById('PERDIDAS').innerText = `Entradas perdidas: ${String(obj.losses)}`
         document.getElementById('GRAFICO2').style = `--value:${String(Number(100/obj.created*obj.losses))}`
-        document.getElementById('LUCRO').innerText = `R$ ${String(obj.profit)}`
+        document.getElementById('LUCRO').innerText = `R$ ${String(obj.profit).replace('.',',')}`
     }
 }
 
